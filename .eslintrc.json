@@ -1,0 +1,26 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb-base"],
+  "rules": {
+    "linebreak-style": 0,
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "object-curly-newline": "off"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {},
+      "webpack": {
+        "config": "./config/webpack.common.js"
+      }
+    }
+  }
+}
