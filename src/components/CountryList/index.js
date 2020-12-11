@@ -7,6 +7,6 @@ const CountryList = () => {
   countryList.innerText = 'Country List';
 
   return countryList;
-}
+};
 
 export default CountryList;
