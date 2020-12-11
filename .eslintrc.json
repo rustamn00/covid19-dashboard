@@ -9,7 +9,13 @@
         "devDependencies": true
       }
     ],
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 80
+      }
+    ]
   },
   "env": {
     "browser": true,

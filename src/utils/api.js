@@ -23,10 +23,11 @@ const getSummaryForAllStatuses = async () => {
   };
 };
 
-const getSummaryForAllCountries = async (status) => {
+const getSummaryForAllCountries = async () => {
   const data = await covidApiFetch('/summary');
   const rawCountriesData = data[REGIONS.COUNTRIES];
   const period = State.getPeriod();
+  const status = State.getStatus();
   const extractedCountriesData = rawCountriesData.map((countryObj) => ({
     Country: countryObj.Country,
     Slug: countryObj.Slug,
