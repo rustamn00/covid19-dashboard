@@ -17,6 +17,7 @@ const getSummaryForAllStatuses = async () => {
   return {
     Region: region,
     Unit: unit,
+    Period: period,
     [STATUSES.CONFIRMED]: regionalData[`${period}${STATUSES.CONFIRMED}`],
     [STATUSES.DEATHS]: regionalData[`${period}${STATUSES.DEATHS}`],
     [STATUSES.RECOVERED]: regionalData[`${period}${STATUSES.RECOVERED}`],
@@ -40,6 +41,7 @@ const getSummaryForAllCountries = async () => {
   return {
     Status: status,
     Unit: unit,
+    Period: period,
     Countries: sortedByStatusFieldDesc,
   };
 };
