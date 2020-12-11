@@ -7,6 +7,6 @@ const WorldMap = () => {
   worldMap.innerText = 'World Map';
 
   return worldMap;
-}
+};
 
 export default WorldMap;

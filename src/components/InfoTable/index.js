@@ -7,6 +7,6 @@ const InfoTable = () => {
   infoTable.innerText = 'Info Table';
 
   return infoTable;
-}
+};
 
 export default InfoTable;
