@@ -1,10 +1,11 @@
 import './style.scss';
 
-const CountryList = () => {
+const CountryList = (summaryForAllCountries) => {
   const countryList = document.createElement('div');
   countryList.className = 'country-list';
 
   countryList.innerText = 'Country List';
+  console.log('summaryForAllCountries', summaryForAllCountries);
 
   return countryList;
 };

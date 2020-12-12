@@ -17,16 +17,18 @@ const getSummaryForAllStatuses = async () => {
   return {
     Region: region,
     Unit: unit,
+    Period: period,
     [STATUSES.CONFIRMED]: regionalData[`${period}${STATUSES.CONFIRMED}`],
     [STATUSES.DEATHS]: regionalData[`${period}${STATUSES.DEATHS}`],
     [STATUSES.RECOVERED]: regionalData[`${period}${STATUSES.RECOVERED}`],
   };
 };
 
-const getSummaryForAllCountries = async (status) => {
+const getSummaryForAllCountries = async () => {
   const data = await covidApiFetch('/summary');
   const rawCountriesData = data[REGIONS.COUNTRIES];
   const period = State.getPeriod();
+  const status = State.getStatus();
   const extractedCountriesData = rawCountriesData.map((countryObj) => ({
     Country: countryObj.Country,
     Slug: countryObj.Slug,
@@ -39,6 +41,7 @@ const getSummaryForAllCountries = async (status) => {
   return {
     Status: status,
     Unit: unit,
+    Period: period,
     Countries: sortedByStatusFieldDesc,
   };
 };
