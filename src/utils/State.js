@@ -12,6 +12,9 @@ const State = {
     this.statusListeners = [];
   },
   setUnit(unit) {
+    if (!Object.keys(UNITS).includes(unit)) {
+      throw new Error(`Invalid argument for unit: '${unit}'`);
+    }
     this.unit = unit;
     this.unitListeners.forEach((unitListener) => unitListener());
   },
@@ -22,6 +25,9 @@ const State = {
     this.unitListeners = this.unitListeners.concat(unitListener);
   },
   setPeriod(period) {
+    if (!Object.keys(PERIODS).includes(period)) {
+      throw new Error(`Invalid argument for period: '${period}'`);
+    }
     this.period = period;
     this.periodListeners.forEach((periodListener) => periodListener());
   },
@@ -32,6 +38,9 @@ const State = {
     this.periodListeners = this.periodListeners.concat(periodListener);
   },
   setRegion(region) {
+    if (!Object.keys(REGIONS).includes(region)) {
+      throw new Error(`Invalid argument for region: '${region}'`);
+    }
     this.region = region;
     this.regionListeners.forEach((regionListener) => regionListener());
   },
@@ -42,6 +51,9 @@ const State = {
     this.regionListeners = this.regionListeners.concat(regionListener);
   },
   setStatus(status) {
+    if (!Object.keys(STATUSES).includes(status)) {
+      throw new Error(`Invalid argument for status: '${status}'`);
+    }
     this.status = status;
     this.statusListeners.forEach((statusListener) => statusListener());
   },
