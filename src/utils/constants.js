@@ -1,20 +1,21 @@
 export const PERIODS = {
-  TOTAL: 'Total',
-  NEW: 'New',
+  ALL_TIME: 'all_time',
+  LAST_DAY: 'last_day',
 };
 
 export const UNITS = {
-  ABSOLUTE: 'Absolute',
-  RELATIVE: 'Relative',
+  ABSOLUTE: 'absolute',
+  RELATIVE: 'relative',
 };
 
 export const REGIONS = {
-  GLOBAL: 'Global',
-  COUNTRIES: 'Countries',
+  ALL: 'all',
 };
 
 export const STATUSES = {
-  CONFIRMED: 'Confirmed',
-  DEATHS: 'Deaths',
-  RECOVERED: 'Recovered',
+  CASES: 'cases',
+  DEATHS: 'deaths',
+  RECOVERED: 'recovered',
 };
+
+export const RELATIVE_POPULATION_COUNT = 10 ** 5;
