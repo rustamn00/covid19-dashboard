@@ -1,18 +1,19 @@
 import { PERIODS, UNITS, REGIONS, STATUSES } from './constants';
+import countryNames from './countryNames.json';
 
 const State = {
   init() {
-    this.region = REGIONS.GLOBAL;
-    this.period = PERIODS.TOTAL;
+    this.region = REGIONS.ALL;
+    this.period = PERIODS.ALL_TIME;
     this.unit = UNITS.ABSOLUTE;
-    this.status = STATUSES.CONFIRMED;
+    this.status = STATUSES.CASES;
     this.regionListeners = [];
     this.periodListeners = [];
     this.unitListeners = [];
     this.statusListeners = [];
   },
   setUnit(unit) {
-    if (!Object.keys(UNITS).includes(unit)) {
+    if (!Object.values(UNITS).includes(unit)) {
       throw new Error(`Invalid argument for unit: '${unit}'`);
     }
     this.unit = unit;
@@ -25,7 +26,7 @@ const State = {
     this.unitListeners = this.unitListeners.concat(unitListener);
   },
   setPeriod(period) {
-    if (!Object.keys(PERIODS).includes(period)) {
+    if (!Object.values(PERIODS).includes(period)) {
       throw new Error(`Invalid argument for period: '${period}'`);
     }
     this.period = period;
@@ -38,7 +39,10 @@ const State = {
     this.periodListeners = this.periodListeners.concat(periodListener);
   },
   setRegion(region) {
-    if (!Object.keys(REGIONS).includes(region)) {
+    if (
+      !Object.values(REGIONS).includes(region) &&
+      !countryNames.includes(region)
+    ) {
       throw new Error(`Invalid argument for region: '${region}'`);
     }
     this.region = region;
@@ -51,7 +55,7 @@ const State = {
     this.regionListeners = this.regionListeners.concat(regionListener);
   },
   setStatus(status) {
-    if (!Object.keys(STATUSES).includes(status)) {
+    if (!Object.values(STATUSES).includes(status)) {
       throw new Error(`Invalid argument for status: '${status}'`);
     }
     this.status = status;
