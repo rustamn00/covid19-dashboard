@@ -1,6 +1,11 @@
 .world-map {
-  width: 400px;
-  height: 100px;
   margin: 20px auto;
   border: 2px solid blue;
+
+  .map-container {
+    margin: auto;
+    height: 512px;
+    width: 512px;
+    border: 2px solid yellow;
+  }
 }

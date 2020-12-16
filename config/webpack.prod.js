@@ -1,5 +1,6 @@
 // Source: https://github.com/taniarascia/webpack-boilerplate
 
+const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -19,6 +20,7 @@ module.exports = merge(common, {
       filename: 'styles/[name].[contenthash].css',
       chunkFilename: '[id].css',
     }),
+    new webpack.EnvironmentPlugin(['MAPBOX_TOKEN']),
   ],
   module: {
     rules: [
