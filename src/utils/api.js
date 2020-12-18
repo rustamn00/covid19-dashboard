@@ -6,8 +6,7 @@ import {
   UNITS,
   RELATIVE_POPULATION_COUNT,
 } from './constants';
-
-const capitalize = (str) => str.slice(0, 1).toUpperCase().concat(str.slice(1));
+import helpers from './helpers';
 
 const worldometersApiFetch = async (path) => {
   const url = new URL(`https://disease.sh/v3/covid-19/${path}`);
@@ -21,7 +20,7 @@ const getStatusFieldNameByPeriod = (period) => (status) => {
   const lastDayPrefix = 'today';
   return period === PERIODS.ALL_TIME
     ? status
-    : lastDayPrefix.concat(capitalize(status));
+    : lastDayPrefix.concat(helpers.capitalize(status));
 };
 
 const getSummaryForAllStatuses = async () => {
@@ -57,7 +56,7 @@ const getSummaryForAllStatuses = async () => {
   };
 };
 
-const getSummaryForAllCountries = async () => {
+const getCovidDataForAllCountries = async () => {
   const countriesData = await worldometersApiFetch('countries');
 
   const period = State.getPeriod();
@@ -68,6 +67,9 @@ const getSummaryForAllCountries = async () => {
     .map((countryObj) => ({
       country: countryObj.country,
       flag: countryObj.countryInfo.flag,
+      iso2: countryObj.countryInfo.iso2,
+      lat: countryObj.countryInfo.lat,
+      long: countryObj.countryInfo.long,
       population: countryObj.population,
       [status]: countryObj[fieldName],
     }));
@@ -83,19 +85,61 @@ const getSummaryForAllCountries = async () => {
     }));
   }
 
-  const sortedByStatusFieldDesc = [...extractedCountriesData].sort(
-    (a, b) => b[status] - a[status],
-  );
-
   return {
     status,
     unit,
     period,
+    countries: extractedCountriesData,
+  };
+};
+
+const getSummaryForAllCountries = async () => {
+  const covidDataForAllCountries = await getCovidDataForAllCountries();
+  const status = State.getStatus();
+  const sortedByStatusFieldDesc = [...covidDataForAllCountries.countries].sort(
+    (a, b) => b[status] - a[status],
+  );
+
+  return {
+    ...covidDataForAllCountries,
     countries: sortedByStatusFieldDesc,
+  };
+};
+
+const getGeoData = async () => {
+  const response = await fetch('assets/data/countries.geojson', {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  });
+  const data = await response.json();
+  return data;
+};
+
+const getMapData = async () => {
+  const geoData = await getGeoData();
+  const { countries, ...metadata } = await getCovidDataForAllCountries();
+  const featuresForAvailableCountries = [];
+  for (let i = 0; i < geoData.features.length; i += 1) {
+    const currentFeature = geoData.features[i];
+    const matchingCountry = countries.find(
+      (country) => country.iso2 === currentFeature.properties.ISO_A2,
+    );
+    if (matchingCountry) {
+      currentFeature.properties = {
+        ...matchingCountry,
+      };
+      featuresForAvailableCountries.push(currentFeature);
+    }
+  }
+  return {
+    ...geoData,
+    ...metadata,
+    features: featuresForAvailableCountries,
   };
 };
 
 export default {
   getSummaryForAllStatuses,
   getSummaryForAllCountries,
+  getMapData,
 };

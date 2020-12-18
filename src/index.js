@@ -46,8 +46,8 @@ const updateCountryList = async () => {
 let worldMap = WorldMap();
 rootNode.appendChild(worldMap);
 const updateWorldMap = async () => {
-  const summaryForAllCountries = await api.getSummaryForAllCountries();
-  const newWorldMap = WorldMap(summaryForAllCountries);
+  const mapData = await api.getMapData();
+  const newWorldMap = WorldMap(mapData);
   rootNode.replaceChild(newWorldMap, worldMap);
   worldMap = newWorldMap;
 };
