@@ -1,7 +1,6 @@
 import './style.scss';
 
-const CountryList = (summaryForAllCountries) => {
-  const summaryObj = summaryForAllCountries;
+const CountryList = (summaryObj) => {
   const countryList = document.createElement('div');
   countryList.className = 'country-list';
 
@@ -13,43 +12,41 @@ const CountryList = (summaryForAllCountries) => {
   searchBlockWrapper.className = 'search__block__wrapper';
 
   const searchInput = document.createElement('input');
-  searchInput.id = 'search__input';
-  searchInput.type = 'search';
   searchInput.className = 'search__input';
+  searchInput.type = 'search';
   searchInput.placeholder = 'Search...';
   searchBlockWrapper.appendChild(searchInput);
   searchBlock.appendChild(searchBlockWrapper);
+
   const casesBlock = document.createElement('div');
   casesBlock.className = 'cases__block';
-  casesBlock.id = 'cases__block';
 
   const totalCasesBlock = document.createElement('div');
-  totalCasesBlock.className = 'totalCases__block';
-  totalCasesBlock.id = 'totalCases__block';
-
-  countryList.appendChild(searchBlock);
-  countryList.appendChild(casesBlock);
-  countryList.appendChild(totalCasesBlock);
+  totalCasesBlock.className = 'total__cases__block';
 
   if (!summaryObj) {
     countryList.innerText = 'Loading';
+    return countryList;
   } else {
+    countryList.appendChild(searchBlock);
+    countryList.appendChild(casesBlock);
+    countryList.appendChild(totalCasesBlock);
     casesForEachCountry(summaryObj.countries);
   }
 
   searchInput.onkeyup = function () {
     casesForEachCountry(summaryObj.countries);
   };
-  function casesForEachCountry(obj) {
+  function casesForEachCountry(countries) {
     casesBlock.innerHTML = '';
-    for (const country of obj) {
+    for (const country of countries) {
       if (
         country.country.toLowerCase().includes(searchInput.value.toLowerCase())
       ) {
         casesBlock.innerHTML += `<div class='cases__for__country'>
-          <div class='cases'>${country.cases}</div>
-          <div class='country__name'>${country.country}</div>
-          <div class='flag'><img src='${country.flag}'></div>
+        <div class='flag'><img src='${country.flag}'></div>
+        <div class='country__name'>${country.country}</div>
+        <div class='cases'>${country.cases}</div>
         </div>`;
       }
     }

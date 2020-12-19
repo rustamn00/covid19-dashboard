@@ -1,7 +1,7 @@
-div#root {
-  display: flex;
-  flex-direction: row-reverse;
-}
+// div#root {
+//   display: flex;
+//   flex-direction: row-reverse;
+// }
 
 .country-list {
   width: 40%;
@@ -16,8 +16,12 @@ div#root {
 .search__block {
   border: 1px solid darkslategray;
   height: 50px;
+  padding: 10px;
   .search__input {
     width: 100%;
+    height: 30px;
+    padding: 5px;
+    border: none;
   }
 }
 .cases__block {
@@ -29,12 +33,14 @@ div#root {
     padding: 10px;
     .cases {
       width: 30%;
+      color: red;
     }
 
     .country__name {
       width: 40%;
     }
     .flag {
+      width: 30%;
       img {
         width: 40px;
         height: 20px;
