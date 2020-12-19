@@ -29,6 +29,7 @@ const renderMap = (containerName, mapData) => {
     worldCopyJump: true,
   });
   map.setView([0, 0], 1);
+  map.zoomControl.setPosition('bottomleft');
 
   L.tileLayer(
     'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}' +
