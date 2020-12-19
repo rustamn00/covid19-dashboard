@@ -1,10 +1,7 @@
 import './style.scss';
 import 'leaflet/dist/leaflet.css';
-import { PERIODS, STATUSES, UNITS } from 'utils/constants';
-import helpers from 'utils/helpers';
-import State from 'utils/State';
 import renderMap from './renderMap';
-import Select from './components/Select';
+import Select from '../common/Select';
 
 const WorldMap = (mapData) => {
   const worldMap = document.createElement('div');
@@ -19,32 +16,8 @@ const WorldMap = (mapData) => {
   controlPanel.className = 'control-panel';
   worldMap.appendChild(controlPanel);
 
-  [
-    [
-      STATUSES,
-      mapData.status,
-      (status) => helpers.capitalize(status),
-      (status) => State.setStatus(status),
-    ],
-    [
-      UNITS,
-      mapData.unit,
-      (unit) => (unit === UNITS.ABSOLUTE ? 'Total' : 'Per 100k pop'),
-      (unit) => State.setUnit(unit),
-    ],
-    [
-      PERIODS,
-      mapData.period,
-      (period) => helpers.capitalize(period.replace('_', ' ')),
-      (period) => State.setPeriod(period),
-    ],
-  ].forEach(([valuesObj, defaultValue, titleHelper, onChange]) => {
-    const selectData = Object.values(valuesObj).map((value) => ({
-      title: titleHelper(value),
-      value,
-    }));
-    const select = Select(selectData, defaultValue, onChange);
-    controlPanel.appendChild(select);
+  [Select.Status, Select.Period, Select.Unit].forEach((select) => {
+    controlPanel.appendChild(select());
   });
 
   const mapContainerName = 'map-container';
