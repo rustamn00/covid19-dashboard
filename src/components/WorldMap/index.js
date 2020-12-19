@@ -5,7 +5,7 @@ const WorldMap = (summaryForAllCountries) => {
   worldMap.className = 'world-map';
 
   worldMap.innerText = 'World Map';
-  console.log('summaryForAllCountries', summaryForAllCountries);
+  // console.log('summaryForAllCountries', summaryForAllCountries);
 
   return worldMap;
 };
