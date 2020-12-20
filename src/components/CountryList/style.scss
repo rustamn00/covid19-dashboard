@@ -1,6 +1,44 @@
+div#root {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .country-list {
-  width: 400px;
-  height: 100px;
-  margin: 20px auto;
+  width: 40%;
+  margin: 20px;
   border: 2px solid red;
+  border-radius: 5px;
+  background-color: darkslategray;
+  color: aliceblue;
+  overflow: auto;
+  order: 1;
+}
+.search__block {
+  border: 1px solid darkslategray;
+  height: 50px;
+  .search__input {
+    width: 100%;
+  }
+}
+.cases__block {
+  height: 500px;
+  overflow: auto;
+  .cases__for__country {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    .cases {
+      width: 30%;
+    }
+
+    .country__name {
+      width: 40%;
+    }
+    .flag {
+      img {
+        width: 40px;
+        height: 20px;
+      }
+    }
+  }
 }
