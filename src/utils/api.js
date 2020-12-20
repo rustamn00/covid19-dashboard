@@ -1,42 +1,50 @@
 import State from './State';
 import {
-  STATUSES,
   REGIONS,
   PERIODS,
   UNITS,
   RELATIVE_POPULATION_COUNT,
 } from './constants';
-import helpers from './helpers';
+import countriesData from './countriesData.json';
 
-const worldometersApiFetch = async (path, params) => {
-  const url = new URL(`https://disease.sh/v3/covid-19/${path}`);
-  Object.keys(params).forEach((key) =>
-    url.searchParams.append(key, params[key]),
-  );
+const countryCodesString = countriesData
+  .map((country) => country.iso2)
+  .join(',');
+
+const hopkinsApiFetch = async (path, lastdays) => {
+  const url = new URL(`https://disease.sh/v3/covid-19/historical/${path}`);
+  url.searchParams.append('lastdays', String(lastdays));
   const response = await fetch(url);
   const data = await response.json();
   return data;
 };
 
-const getStatusFieldNameByPeriod = (period) => (status) => {
-  const lastDayPrefix = 'today';
+const getStatusCount = (statusObj) => {
+  const period = State.getPeriod();
+  const lastTwoDates = Object.keys(statusObj)
+    .sort((a, b) => new Date(b) - new Date(a))
+    .slice(0, 2);
   return period === PERIODS.ALL_TIME
-    ? status
-    : lastDayPrefix.concat(helpers.capitalize(status));
+    ? statusObj[lastTwoDates[0]]
+    : statusObj[lastTwoDates[0]] - statusObj[lastTwoDates[1]];
 };
 
 const getSummaryForAllStatuses = async () => {
   const region = State.getRegion();
-  const url = region === REGIONS.ALL ? REGIONS.ALL : `countries/${region}`;
-  const regionalData = await worldometersApiFetch(url, [{ yesterday: true }]);
-
   const period = State.getPeriod();
-  const getStatusFieldName = getStatusFieldNameByPeriod(period);
-  const statusCountsObj = Object.values(STATUSES).reduce(
-    (result, status) => ({
-      ...result,
-      [status]: regionalData[getStatusFieldName(status)],
-    }),
+  const regionalData = await hopkinsApiFetch(
+    region,
+    period === PERIODS.ALL_TIME ? 1 : 2,
+  );
+
+  const timeline =
+    region === REGIONS.ALL ? regionalData : regionalData.timeline;
+
+  const statusCountsObj = Object.entries(timeline).reduce(
+    (acc, [statusKey, statusObj]) => {
+      acc[statusKey] = getStatusCount(statusObj);
+      return acc;
+    },
     {},
   );
 
@@ -59,24 +67,19 @@ const getSummaryForAllStatuses = async () => {
 };
 
 const getCovidDataForAllCountries = async () => {
-  const countriesData = await worldometersApiFetch('countries', [
-    { yesterday: true },
-  ]);
-
   const period = State.getPeriod();
   const status = State.getStatus();
-  const fieldName = getStatusFieldNameByPeriod(period)(status);
-  let extractedCountriesData = countriesData
-    .filter(({ population }) => population > 0)
-    .map((countryObj) => ({
-      country: countryObj.country,
-      flag: countryObj.countryInfo.flag,
-      iso2: countryObj.countryInfo.iso2,
-      lat: countryObj.countryInfo.lat,
-      long: countryObj.countryInfo.long,
-      population: countryObj.population,
-      [status]: countryObj[fieldName],
-    }));
+  const covidData = await hopkinsApiFetch(
+    countryCodesString,
+    period === PERIODS.ALL_TIME ? 1 : 2,
+  );
+  let extractedCountriesData = countriesData.map((country, i) => {
+    const statusCount = getStatusCount(covidData[i].timeline[status]);
+    return {
+      ...country,
+      [status]: statusCount,
+    };
+  });
 
   const unit = State.getUnit();
   if (unit === UNITS.RELATIVE) {
