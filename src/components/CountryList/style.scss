@@ -1,8 +1,3 @@
-div#root {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
 .country-list {
   width: 40%;
   margin: 20px;
@@ -18,6 +13,9 @@ div#root {
   height: 50px;
   .search__input {
     width: 100%;
+    height: 30px;
+    padding: 5px;
+    border: none;
   }
 }
 .cases__block {
@@ -29,12 +27,14 @@ div#root {
     padding: 10px;
     .cases {
       width: 30%;
+      color: red;
     }
 
     .country__name {
       width: 40%;
     }
     .flag {
+      width: 30%;
       img {
         width: 40px;
         height: 20px;

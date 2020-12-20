@@ -1,7 +1,6 @@
 import './style.scss';
 
-const CountryList = (summaryForAllCountries) => {
-  const summaryObj = summaryForAllCountries;
+const CountryList = (summaryObj) => {
   const countryList = document.createElement('div');
   countryList.className = 'country-list';
 
@@ -34,23 +33,46 @@ const CountryList = (summaryForAllCountries) => {
   if (!summaryObj) {
     countryList.innerText = 'Loading';
   } else {
-    casesForEachCountry(summaryObj.countries);
-  }
+    searchInput.className = 'search__input';
+    searchInput.type = 'search';
+    searchInput.placeholder = 'Search...';
+    searchBlockWrapper.appendChild(searchInput);
+    searchBlock.appendChild(searchBlockWrapper);
 
-  searchInput.onkeyup = function () {
-    casesForEachCountry(summaryObj.countries);
-  };
-  function casesForEachCountry(obj) {
-    casesBlock.innerHTML = '';
-    for (const country of obj) {
-      if (
-        country.country.toLowerCase().includes(searchInput.value.toLowerCase())
-      ) {
-        casesBlock.innerHTML += `<div class='cases__for__country'>
-          <div class='cases'>${country.cases}</div>
-          <div class='country__name'>${country.country}</div>
-          <div class='flag'><img src='${country.flag}'></div>
+    const casesBlock = document.createElement('div');
+    casesBlock.className = 'cases__block';
+
+    const totalCasesBlock = document.createElement('div');
+    totalCasesBlock.className = 'total__cases__block';
+
+    if (!summaryObj) {
+      countryList.innerText = 'Loading';
+      return countryList;
+    } else {
+      countryList.appendChild(searchBlock);
+      countryList.appendChild(casesBlock);
+      countryList.appendChild(totalCasesBlock);
+      casesForEachCountry(summaryObj.countries);
+    }
+
+    searchInput.onkeyup = function () {
+      casesForEachCountry(summaryObj.countries);
+    };
+
+    function casesForEachCountry(countries) {
+      casesBlock.innerHTML = '';
+      for (const country of countries) {
+        if (
+          country.country
+            .toLowerCase()
+            .includes(searchInput.value.toLowerCase())
+        ) {
+          casesBlock.innerHTML += `<div class='cases__for__country'>
+        <div class='flag'><img src='${country.flag}'></div>
+        <div class='country__name'>${country.country}</div>
+        <div class='cases'>${country.cases}</div>
         </div>`;
+        }
       }
     }
   }
