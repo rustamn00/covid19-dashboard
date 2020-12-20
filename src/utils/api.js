@@ -8,9 +8,11 @@ import {
 } from './constants';
 import helpers from './helpers';
 
-const worldometersApiFetch = async (path) => {
+const worldometersApiFetch = async (path, params) => {
   const url = new URL(`https://disease.sh/v3/covid-19/${path}`);
-  url.searchParams.append('yesterday', 'true');
+  Object.keys(params).forEach((key) =>
+    url.searchParams.append(key, params[key]),
+  );
   const response = await fetch(url);
   const data = await response.json();
   return data;
@@ -26,7 +28,7 @@ const getStatusFieldNameByPeriod = (period) => (status) => {
 const getSummaryForAllStatuses = async () => {
   const region = State.getRegion();
   const url = region === REGIONS.ALL ? REGIONS.ALL : `countries/${region}`;
-  const regionalData = await worldometersApiFetch(url);
+  const regionalData = await worldometersApiFetch(url, [{ yesterday: true }]);
 
   const period = State.getPeriod();
   const getStatusFieldName = getStatusFieldNameByPeriod(period);
@@ -57,7 +59,9 @@ const getSummaryForAllStatuses = async () => {
 };
 
 const getCovidDataForAllCountries = async () => {
-  const countriesData = await worldometersApiFetch('countries');
+  const countriesData = await worldometersApiFetch('countries', [
+    { yesterday: true },
+  ]);
 
   const period = State.getPeriod();
   const status = State.getStatus();
