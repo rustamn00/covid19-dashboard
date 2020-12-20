@@ -5,7 +5,7 @@ const InfoTable = (summaryForAllStatuses) => {
   infoTable.className = 'info-table';
 
   infoTable.innerText = 'Info Table';
-  // console.log('summaryForAllStatuses', summaryForAllStatuses);
+  console.log('summaryForAllStatuses', summaryForAllStatuses);
 
   return infoTable;
 };

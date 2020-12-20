@@ -1,9 +1,14 @@
+import Select from '../common/Select';
 import './style.scss';
 
 const CountryList = (summaryObj) => {
   const countryList = document.createElement('div');
   countryList.className = 'country-list';
 
+  if (!summaryObj) {
+    countryList.innerText = 'Loading';
+    return countryList;
+  }
   const searchBlock = document.createElement('div');
   searchBlock.className = 'search__block';
   searchBlock.id = 'search__block';
@@ -22,62 +27,31 @@ const CountryList = (summaryObj) => {
   casesBlock.className = 'cases__block';
   casesBlock.id = 'cases__block';
 
-  const totalCasesBlock = document.createElement('div');
-  totalCasesBlock.className = 'totalCases__block';
-  totalCasesBlock.id = 'totalCases__block';
+  countryList.appendChild(Select.Period());
+  countryList.appendChild(Select.Unit());
+  countryList.appendChild(Select.Status());
 
   countryList.appendChild(searchBlock);
   countryList.appendChild(casesBlock);
-  countryList.appendChild(totalCasesBlock);
-
-  if (!summaryObj) {
-    countryList.innerText = 'Loading';
-  } else {
-    searchInput.className = 'search__input';
-    searchInput.type = 'search';
-    searchInput.placeholder = 'Search...';
-    searchBlockWrapper.appendChild(searchInput);
-    searchBlock.appendChild(searchBlockWrapper);
-
-    const casesBlock = document.createElement('div');
-    casesBlock.className = 'cases__block';
-
-    const totalCasesBlock = document.createElement('div');
-    totalCasesBlock.className = 'total__cases__block';
-
-    if (!summaryObj) {
-      countryList.innerText = 'Loading';
-      return countryList;
-    } else {
-      countryList.appendChild(searchBlock);
-      countryList.appendChild(casesBlock);
-      countryList.appendChild(totalCasesBlock);
-      casesForEachCountry(summaryObj.countries);
-    }
-
-    searchInput.onkeyup = function () {
-      casesForEachCountry(summaryObj.countries);
-    };
-
-    function casesForEachCountry(countries) {
-      casesBlock.innerHTML = '';
-      for (const country of countries) {
-        if (
-          country.country
-            .toLowerCase()
-            .includes(searchInput.value.toLowerCase())
-        ) {
-          casesBlock.innerHTML += `<div class='cases__for__country'>
+  function casesForEachCountry(countries) {
+    casesBlock.innerHTML = '';
+    countries.forEach((country) => {
+      searchInput.value = searchInput.value.toLowerCase();
+      if (country.country.toLowerCase().includes(searchInput.value.trim())) {
+        casesBlock.innerHTML += `<div class='cases__for__country'>
         <div class='flag'><img src='${country.flag}'></div>
         <div class='country__name'>${country.country}</div>
-        <div class='cases'>${country.cases}</div>
+        <div class='cases'>${country[summaryObj.status]}</div>
         </div>`;
-        }
       }
-    }
+    });
   }
+  casesForEachCountry(summaryObj.countries);
+
+  searchInput.onkeyup = () => {
+    casesForEachCountry(summaryObj.countries);
+  };
 
   return countryList;
 };
-
 export default CountryList;
