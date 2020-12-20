@@ -1,6 +1,61 @@
 .world-map {
-  width: 400px;
-  height: 100px;
   margin: 20px auto;
   border: 2px solid blue;
+
+  .control-panel {
+    display: flex;
+    margin: 10px auto;
+  }
+
+  .control-panel > * {
+    margin-right: 5px;
+  }
+
+  .map-container {
+    margin: auto;
+    height: 512px;
+    width: 512px;
+    border: 2px solid yellow;
+  }
+
+  .map-info, .leaflet-popup-content-wrapper {
+    padding: 5px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    border-radius: 5px;
+  }
+  .leaflet-popup-tip {
+    background: white;
+    background: rgba(255,255,255,0.8);
+  }
+  h4 {
+    margin: 0 0 5px;
+    color: #333;
+  }
+  h4.center {
+    text-align: center;
+  }
+  h5 {
+    margin: 0;
+  }
+  .leaflet-popup-content {
+    margin: 8px 4px 0;
+  }
+
+  .legend {
+    line-height: 18px;
+    color: #555;
+  }
+  .legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+  }
+
+  .leaflet-control-attribution.leaflet-control {
+    display: none;
+  }
 }
