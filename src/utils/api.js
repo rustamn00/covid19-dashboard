@@ -4,12 +4,18 @@ import {
   PERIODS,
   UNITS,
   RELATIVE_POPULATION_COUNT,
+  STATUSES,
 } from './constants';
 import countriesData from './countriesData.json';
 
 const countryCodesString = countriesData
   .map((country) => country.iso2)
   .join(',');
+
+const worldPopulation = countriesData.reduce(
+  (totalPopulation, { population }) => totalPopulation + population,
+  0,
+);
 
 const hopkinsApiFetch = async (path, lastdays) => {
   const url = new URL(`https://disease.sh/v3/covid-19/historical/${path}`);
@@ -50,7 +56,10 @@ const getSummaryForAllStatuses = async () => {
 
   const unit = State.getUnit();
   if (unit === UNITS.RELATIVE) {
-    const { population } = regionalData;
+    const population =
+      region === REGIONS.ALL
+        ? worldPopulation
+        : countriesData.find((country) => country.iso2 === region).population;
     Object.keys(statusCountsObj).forEach((key) => {
       statusCountsObj[key] = Math.round(
         (statusCountsObj[key] * RELATIVE_POPULATION_COUNT) / population,
@@ -145,8 +154,70 @@ const getMapData = async () => {
   };
 };
 
+const getDailyChartData = async () => {
+  const region = State.getRegion();
+  const regionalData = await hopkinsApiFetch(region, 31);
+  const timeline =
+    region === REGIONS.ALL ? regionalData : regionalData.timeline;
+  const status = State.getStatus();
+  const statusObj = timeline[status];
+  let sortedByDate = Object.entries(statusObj).sort(
+    (a, b) => new Date(a[0]) - new Date(b[0]),
+  );
+
+  // start: adjusting data anomalies
+  let isDataUnavailable = false;
+  if (region === 'US' && status === STATUSES.RECOVERED) {
+    isDataUnavailable = true;
+  }
+  if (region === REGIONS.ALL && status === STATUSES.RECOVERED) {
+    sortedByDate = sortedByDate.map(([key, val]) => {
+      if (new Date(key) > new Date('12/13/2020')) {
+        return [key, val + 10 ** 7];
+      }
+      return [key, val];
+    });
+  }
+  // end: adjusting data anomalies
+
+  const period = State.getPeriod();
+  let adjustedByPeriod = [];
+  if (period === PERIODS.ALL_TIME) {
+    adjustedByPeriod.push(...sortedByDate.slice(1));
+  } else {
+    for (let i = sortedByDate.length - 1; i > 0; i -= 1) {
+      adjustedByPeriod.unshift([
+        sortedByDate[i][0],
+        sortedByDate[i][1] - sortedByDate[i - 1][1],
+      ]);
+    }
+  }
+
+  const unit = State.getUnit();
+  if (unit === UNITS.RELATIVE) {
+    const population =
+      region === REGIONS.ALL
+        ? worldPopulation
+        : countriesData.find((country) => country.iso2 === region).population;
+    adjustedByPeriod = adjustedByPeriod.map(([key, value]) => [
+      key,
+      Math.round((RELATIVE_POPULATION_COUNT * value) / population),
+    ]);
+  }
+
+  return {
+    isDataUnavailable,
+    period,
+    region,
+    status,
+    unit,
+    figures: adjustedByPeriod,
+  };
+};
+
 export default {
   getSummaryForAllStatuses,
   getSummaryForAllCountries,
   getMapData,
+  getDailyChartData,
 };
