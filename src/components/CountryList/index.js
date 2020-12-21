@@ -1,4 +1,5 @@
 import Select from '../common/Select';
+import State from '../../utils/State';
 import './style.scss';
 
 const CountryList = (summaryObj) => {
@@ -38,11 +39,18 @@ const CountryList = (summaryObj) => {
     countries.forEach((country) => {
       searchInput.value = searchInput.value.toLowerCase();
       if (country.country.toLowerCase().includes(searchInput.value.trim())) {
-        casesBlock.innerHTML += `<div class='cases__for__country'>
-        <div class='flag'><img src='${country.flag}'></div>
-        <div class='country__name'>${country.country}</div>
-        <div class='cases'>${country[summaryObj.status]}</div>
-        </div>`;
+        const row = document.createElement('div');
+        row.className = 'cases__for__country';
+        row.innerHTML = `
+          <div class='flag'><img src='${country.flag}'></div>
+          <div class='country__name'>${country.country}</div>
+          <div class='cases'>${country[summaryObj.status]}</div>
+        `;
+        row.addEventListener('click', () => {
+          console.log('aaaa');
+          State.setRegion(country.country);
+        });
+        casesBlock.appendChild(row);
       }
     });
   }
@@ -51,7 +59,6 @@ const CountryList = (summaryObj) => {
   searchInput.onkeyup = () => {
     casesForEachCountry(summaryObj.countries);
   };
-
   return countryList;
 };
 export default CountryList;
