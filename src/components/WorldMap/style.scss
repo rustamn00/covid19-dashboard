@@ -4,7 +4,7 @@
 
   .control-panel {
     display: flex;
-    justify-content: space-evenly;
+    margin: 10px auto;
   }
 
   .control-panel > * {
@@ -58,15 +58,5 @@
 
   .leaflet-control-attribution.leaflet-control {
     display: none;
-  }
-
-  select {
-    background-color: #c834db;
-    color: white;
-    padding: 4px;
-    font-size: 16px;
-    border-style: groove;
-    cursor: pointer;
-    font-family: monospace;
   }
 }

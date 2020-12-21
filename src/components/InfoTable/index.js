@@ -6,8 +6,11 @@ const InfoTable = (summaryForAllStatuses) => {
   const infoTable = document.createElement('div');
   infoTable.className = 'info-table';
   
+  if (!dataObj) {
+    infoTable.innerText = 'Loading';
+    return infoTable;
+  }
   infoTable.innerText = '';
-// console.log('summaryForAllStatuses', summaryForAllStatuses);
 
   const dataTableCases = document.createElement('span');
   dataTableCases.className = 'cases';
@@ -16,13 +19,11 @@ const InfoTable = (summaryForAllStatuses) => {
   const dataTableDeaths = document.createElement('span');
   dataTableDeaths.className = 'deaths';
 
-  if (!dataObj) {
-    dataTableCases.innerText = 'Loading';
-  } else {
-    dataTableCases.innerText = `Global cases: ${dataObj.cases}`;
-    dataTableRecovered.innerText = `Global recovered: ${dataObj.recovered}`;
-    dataTableDeaths.innerText = `Global deaths: ${dataObj.deaths}`;
-  }
+  
+  dataTableCases.innerText = `Global cases: ${dataObj.cases}`;
+  dataTableRecovered.innerText = `Global recovered: ${dataObj.recovered}`;
+  dataTableDeaths.innerText = `Global deaths: ${dataObj.deaths}`;
+  
 
   const optionPanel = document.createElement('div');
   optionPanel.className = 'optionsPanel';
