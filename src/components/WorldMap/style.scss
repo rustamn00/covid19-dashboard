@@ -18,16 +18,17 @@
     border: 2px solid yellow;
   }
 
-  .map-info, .leaflet-popup-content-wrapper {
+  .map-info,
+  .leaflet-popup-content-wrapper {
     padding: 5px;
     font: 14px/16px Arial, Helvetica, sans-serif;
     background: white;
-    background: rgba(255,255,255,0.8);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 5px;
   }
   .leaflet-popup-tip {
     background: white;
-    background: rgba(255,255,255,0.8);
+    background: rgba(255, 255, 255, 0.8);
   }
   h4 {
     margin: 0 0 5px;

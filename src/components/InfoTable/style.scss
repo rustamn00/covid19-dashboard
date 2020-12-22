@@ -1,6 +1,37 @@
 .info-table {
-  width: 400px;
-  height: 100px;
   margin: 20px auto;
   border: 2px solid green;
+
+  span {
+    text-align: center;
+    display: table-cell;
+    font-family: sans-serif;
+  }
+
+  h2 {
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: normal;
+  }
+
+  .deaths {
+    color: red;
+  }
+  .recovered {
+    color: green;
+  }
+  .cases {
+    color: blue;
+  }
+
+  .optionsPanel {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .dataPanel {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
 }
