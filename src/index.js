@@ -1,7 +1,7 @@
 import State from 'utils/State';
 import api from 'utils/api';
 import './styles/main.scss';
-import { CountryList, InfoTable, WorldMap } from './components';
+import { CountryList, InfoTable, WorldMap, DailyChart } from './components';
 
 State.init();
 const {
@@ -61,4 +61,24 @@ const updateWorldMap = async () => {
 });
 (async () => {
   await updateWorldMap();
+})();
+
+let chart = DailyChart();
+rootNode.appendChild(chart);
+const updateDailyChart = async () => {
+  const chartData = await api.getDailyChartData();
+  const newDailyChart = DailyChart(chartData);
+  rootNode.replaceChild(newDailyChart, chart);
+  chart = newDailyChart;
+};
+[
+  subscribeToPeriod,
+  subscribeToRegion,
+  subscribeToStatus,
+  subscribeToUnit,
+].forEach((subscribe) => {
+  subscribe.call(State, updateDailyChart);
+});
+(async () => {
+  await updateDailyChart();
 })();

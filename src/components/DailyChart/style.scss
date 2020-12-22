@@ -1,0 +1,10 @@
+.daily-chart {
+  border: 2px solid brown;
+  width: 450px;
+  margin: auto;
+  position: relative;
+
+  .control-panel > * {
+    margin-right: 5px;
+  }
+}

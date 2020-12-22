@@ -1,5 +1,7 @@
 import { PERIODS, UNITS, REGIONS, STATUSES } from './constants';
-import countryNames from './countryNames.json';
+import countriesData from './countriesData.json';
+
+const countryNames = countriesData.map(({ country }) => country);
 
 const State = {
   init() {
