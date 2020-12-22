@@ -1,11 +1,10 @@
 .world-map {
-  margin: 20px auto;
   border: 2px solid blue;
-
+  width: 100%;
   .map-container {
     margin: auto;
     height: 512px;
-    width: 512px;
+    width: 100%;
     border: 2px solid yellow;
   }
 

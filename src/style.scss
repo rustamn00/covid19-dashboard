@@ -1,0 +1,44 @@
+#root {
+  display: flex;
+}
+
+.block-container {
+  position: relative;
+  width: fit-content;
+  .x-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.country-list-container {
+  width: 25%;
+}
+
+.world-map-container {
+  width: 50%;
+}
+
+.right-section {
+  width: 25%;
+}
+
+@media (max-width: 1024px) {
+  #root {
+    flex-wrap: wrap;
+
+    .country-list-container {
+      width: 250px;
+    }
+
+    .world-map-container {
+      width: 500px;
+      order: 3;
+    }
+
+    .right-section {
+      width: 250px;
+    }
+  }
+}

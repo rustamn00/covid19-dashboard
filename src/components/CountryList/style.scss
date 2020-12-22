@@ -1,6 +1,5 @@
 .country-list {
-  width: 40%;
-  margin: 20px;
+  width: 100%;
   border: 2px solid red;
   border-radius: 5px;
   background-color: darkslategray;
@@ -19,7 +18,7 @@
   }
 }
 .cases__block {
-  height: 500px;
+  height: 400px;
   overflow: auto;
   .cases__for__country {
     display: flex;
