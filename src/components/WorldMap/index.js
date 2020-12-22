@@ -1,7 +1,8 @@
+import { SELECT_TYPES } from 'utils/constants';
+import ControlPanel from '../common/ControlPanel';
 import './style.scss';
 import 'leaflet/dist/leaflet.css';
 import renderMap from './renderMap';
-import Select from '../common/Select';
 
 const WorldMap = (mapData) => {
   const worldMap = document.createElement('div');
@@ -12,13 +13,8 @@ const WorldMap = (mapData) => {
     return worldMap;
   }
 
-  const controlPanel = document.createElement('div');
-  controlPanel.className = 'control-panel';
-  worldMap.appendChild(controlPanel);
-
-  [Select.Status, Select.Period, Select.Unit].forEach((select) => {
-    controlPanel.appendChild(select());
-  });
+  const { PERIOD, STATUS, UNIT } = SELECT_TYPES;
+  worldMap.appendChild(ControlPanel(PERIOD, STATUS, UNIT));
 
   const mapContainerName = 'map-container';
   const mapContainer = document.createElement('div');

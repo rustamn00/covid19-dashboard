@@ -1,4 +1,5 @@
-import Select from '../common/Select';
+import { SELECT_TYPES } from 'utils/constants';
+import ControlPanel from '../common/ControlPanel';
 import State from '../../utils/State';
 import helpers from '../../utils/helpers';
 import './style.scss';
@@ -29,9 +30,8 @@ const CountryList = (summaryObj) => {
   casesBlock.className = 'cases__block';
   casesBlock.id = 'cases__block';
 
-  countryList.appendChild(Select.Period());
-  countryList.appendChild(Select.Unit());
-  countryList.appendChild(Select.Status());
+  const { PERIOD, STATUS, UNIT } = SELECT_TYPES;
+  countryList.appendChild(ControlPanel(PERIOD, STATUS, UNIT));
 
   countryList.appendChild(searchBlock);
   countryList.appendChild(casesBlock);
