@@ -1,5 +1,8 @@
+import { REGIONS } from 'utils/constants';
+import helpers from 'utils/helpers';
 import './style.scss';
 import Select from '../common/Select';
+
 
 const InfoTable = (summaryForAllStatuses) => {
   const dataObj = summaryForAllStatuses;
@@ -10,7 +13,6 @@ const InfoTable = (summaryForAllStatuses) => {
     infoTable.innerText = 'Loading';
     return infoTable;
   }
-  infoTable.innerText = '';
 
   const dataTableCases = document.createElement('span');
   dataTableCases.className = 'cases';
@@ -20,9 +22,12 @@ const InfoTable = (summaryForAllStatuses) => {
   dataTableDeaths.className = 'deaths';
 
   
-  dataTableCases.innerText = `Global cases: ${dataObj.cases}`;
-  dataTableRecovered.innerText = `Global recovered: ${dataObj.recovered}`;
-  dataTableDeaths.innerText = `Global deaths: ${dataObj.deaths}`;
+  dataTableCases.innerText = 
+  `Cases: ${helpers.addThousandsSeparator(dataObj.cases)}`;
+  dataTableRecovered.innerText = 
+  `Recovered: ${helpers.addThousandsSeparator(dataObj.recovered)}`;
+  dataTableDeaths.innerText = 
+  `Deaths: ${helpers.addThousandsSeparator(dataObj.deaths)}`;
   
 
   const optionPanel = document.createElement('div');
@@ -34,7 +39,15 @@ const InfoTable = (summaryForAllStatuses) => {
   const dataPanel = document.createElement('div');
   dataPanel.className = 'dataPanel';
 
+  const regionText = document.createElement('h2');
   
+  if (summaryForAllStatuses.region === REGIONS.ALL) {
+    regionText.innerText = 'Global';
+  } else {
+    regionText.innerText = summaryForAllStatuses.region;
+  }
+
+  dataPanel.appendChild(regionText);
   dataPanel.appendChild(dataTableCases);
   dataPanel.appendChild(dataTableRecovered);
   dataPanel.appendChild(dataTableDeaths);
