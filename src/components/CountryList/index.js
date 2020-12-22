@@ -1,5 +1,6 @@
 import Select from '../common/Select';
 import State from '../../utils/State';
+import helpers from '../../utils/helpers';
 import './style.scss';
 
 const CountryList = (summaryObj) => {
@@ -44,10 +45,11 @@ const CountryList = (summaryObj) => {
         row.innerHTML = `
           <div class='flag'><img src='${country.flag}'></div>
           <div class='country__name'>${country.country}</div>
-          <div class='cases'>${country[summaryObj.status]}</div>
+          <div class='cases'>${helpers.addThousandsSeparator(
+            country[summaryObj.status],
+          )}</div>
         `;
         row.addEventListener('click', () => {
-          console.log('aaaa');
           State.setRegion(country.country);
         });
         casesBlock.appendChild(row);

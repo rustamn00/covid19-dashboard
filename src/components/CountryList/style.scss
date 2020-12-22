@@ -25,6 +25,11 @@
     display: flex;
     justify-content: space-around;
     padding: 10px;
+    border-bottom: 1px solid white;
+    &:hover {
+      cursor: pointer;
+      background-color: gray;
+    }
     .cases {
       width: 30%;
       color: red;
