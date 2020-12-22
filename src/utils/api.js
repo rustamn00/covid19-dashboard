@@ -4,6 +4,7 @@ import {
   PERIODS,
   UNITS,
   RELATIVE_POPULATION_COUNT,
+  WORLD_POPULATION_COUNT,
   STATUSES,
 } from './constants';
 import countriesData from './countriesData.json';
@@ -11,11 +12,6 @@ import countriesData from './countriesData.json';
 const countryCodesString = countriesData
   .map((country) => country.iso2)
   .join(',');
-
-const worldPopulation = countriesData.reduce(
-  (totalPopulation, { population }) => totalPopulation + population,
-  0,
-);
 
 const hopkinsApiFetch = async (path, lastdays) => {
   const url = new URL(`https://disease.sh/v3/covid-19/historical/${path}`);
@@ -58,7 +54,7 @@ const getSummaryForAllStatuses = async () => {
   if (unit === UNITS.RELATIVE) {
     const population =
       region === REGIONS.ALL
-        ? worldPopulation
+        ? WORLD_POPULATION_COUNT
         : countriesData.find((country) => country.iso2 === region).population;
     Object.keys(statusCountsObj).forEach((key) => {
       statusCountsObj[key] = Math.round(
@@ -197,7 +193,7 @@ const getDailyChartData = async () => {
   if (unit === UNITS.RELATIVE) {
     const population =
       region === REGIONS.ALL
-        ? worldPopulation
+        ? WORLD_POPULATION_COUNT
         : countriesData.find((country) => country.iso2 === region).population;
     adjustedByPeriod = adjustedByPeriod.map(([key, value]) => [
       key,

@@ -19,3 +19,4 @@ export const STATUSES = {
 };
 
 export const RELATIVE_POPULATION_COUNT = 10 ** 5;
+export const WORLD_POPULATION_COUNT = 7794000000;
