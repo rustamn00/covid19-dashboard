@@ -1,14 +1,13 @@
-import { REGIONS } from 'utils/constants';
 import helpers from 'utils/helpers';
+import { REGIONS, SELECT_TYPES } from 'utils/constants';
+import ControlPanel from '../common/ControlPanel';
 import './style.scss';
-import Select from '../common/Select';
-
 
 const InfoTable = (summaryForAllStatuses) => {
   const dataObj = summaryForAllStatuses;
   const infoTable = document.createElement('div');
   infoTable.className = 'info-table';
-  
+
   if (!dataObj) {
     infoTable.innerText = 'Loading';
     return infoTable;
@@ -21,26 +20,21 @@ const InfoTable = (summaryForAllStatuses) => {
   const dataTableDeaths = document.createElement('span');
   dataTableDeaths.className = 'deaths';
 
-  
-  dataTableCases.innerText = 
-  `Cases: ${helpers.addThousandsSeparator(dataObj.cases)}`;
-  dataTableRecovered.innerText = 
-  `Recovered: ${helpers.addThousandsSeparator(dataObj.recovered)}`;
-  dataTableDeaths.innerText = 
-  `Deaths: ${helpers.addThousandsSeparator(dataObj.deaths)}`;
-  
-
-  const optionPanel = document.createElement('div');
-  optionPanel.className = 'optionsPanel';
-
-  optionPanel.appendChild(Select.Period());
-  optionPanel.appendChild(Select.Unit());
+  dataTableCases.innerText = `Cases: ${helpers.addThousandsSeparator(
+    dataObj.cases,
+  )}`;
+  dataTableRecovered.innerText = `Recovered: ${helpers.addThousandsSeparator(
+    dataObj.recovered,
+  )}`;
+  dataTableDeaths.innerText = `Deaths: ${helpers.addThousandsSeparator(
+    dataObj.deaths,
+  )}`;
 
   const dataPanel = document.createElement('div');
   dataPanel.className = 'dataPanel';
 
   const regionText = document.createElement('h2');
-  
+
   if (summaryForAllStatuses.region === REGIONS.ALL) {
     regionText.innerText = 'Global';
   } else {
@@ -52,7 +46,8 @@ const InfoTable = (summaryForAllStatuses) => {
   dataPanel.appendChild(dataTableRecovered);
   dataPanel.appendChild(dataTableDeaths);
 
-  infoTable.appendChild(optionPanel);
+  const { PERIOD, UNIT } = SELECT_TYPES;
+  infoTable.appendChild(ControlPanel(PERIOD, UNIT));
   infoTable.appendChild(dataPanel);
 
   return infoTable;

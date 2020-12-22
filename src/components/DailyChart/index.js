@@ -1,4 +1,5 @@
-import Select from '../common/Select';
+import { SELECT_TYPES } from 'utils/constants';
+import ControlPanel from '../common/ControlPanel';
 import renderChart from './renderChart';
 import './style.scss';
 
@@ -11,12 +12,8 @@ const DailyChart = (dailyChartData) => {
     return dailyChart;
   }
 
-  const controlPanel = document.createElement('control-panel');
-  controlPanel.className = 'control-panel';
-  [Select.Period, Select.Status, Select.Unit].forEach((select) => {
-    controlPanel.appendChild(select());
-  });
-  dailyChart.appendChild(controlPanel);
+  const { PERIOD, STATUS, UNIT } = SELECT_TYPES;
+  dailyChart.appendChild(ControlPanel(PERIOD, STATUS, UNIT));
 
   if (dailyChartData.isDataUnavailable) {
     const unavailableDataText = document.createElement('h4');

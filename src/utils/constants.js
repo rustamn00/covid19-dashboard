@@ -18,5 +18,11 @@ export const STATUSES = {
   RECOVERED: 'recovered',
 };
 
+export const SELECT_TYPES = {
+  PERIOD: 'period',
+  STATUS: 'status',
+  UNIT: 'unit',
+};
+
 export const RELATIVE_POPULATION_COUNT = 10 ** 5;
 export const WORLD_POPULATION_COUNT = 7794000000;
