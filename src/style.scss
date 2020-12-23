@@ -1,0 +1,85 @@
+#root {
+  display: flex;
+}
+
+.block-container {
+  position: relative;
+  width: fit-content;
+  .x-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.country-list-container {
+  width: 25%;
+}
+
+.world-map-container {
+  width: 50%;
+}
+
+.right-section {
+  width: 25%;
+  .info-table-container {
+    width: 100%;
+  }
+  .daily-chart-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  #root {
+    .country-list-container {
+      width: 30%;
+    }
+
+    .world-map-container {
+      width: 40%;
+    }
+
+    .right-section {
+      width: 30%;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  #root {
+    flex-wrap: wrap;
+
+    .country-list-container {
+      width: 50%;
+    }
+
+    .world-map-container {
+      width: 100%;
+      order: 3;
+    }
+
+    .right-section {
+      width: 50%;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  #root {
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    .country-list-container {
+      width: 100%;
+    }
+
+    .world-map-container {
+      width: 100%;
+    }
+
+    .right-section {
+      width: 100%;
+    }
+  }
+}

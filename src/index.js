@@ -1,6 +1,7 @@
 import State from 'utils/State';
 import api from 'utils/api';
 import './styles/main.scss';
+import './style.scss';
 import { CountryList, InfoTable, WorldMap, DailyChart } from './components';
 
 State.init();
@@ -12,13 +13,27 @@ const {
 } = State;
 
 const rootNode = document.getElementById('root');
+const rightSection = document.createElement('div');
+rightSection.className = 'right-section';
 
-let infoTable = InfoTable();
-rootNode.appendChild(infoTable);
+const BlockContainer = (childComponent) => {
+  const blockContainer = document.createElement('div');
+  const xButton = document.createElement('button');
+  xButton.innerText = 'X';
+  xButton.className = `${childComponent.className}-button`;
+  xButton.classList.add('x-button');
+  blockContainer.className = 'block-container';
+  blockContainer.classList.add(`${childComponent.className}-container`);
+  blockContainer.appendChild(childComponent);
+  blockContainer.appendChild(xButton);
+  return blockContainer;
+};
+let infoTable = BlockContainer(InfoTable());
+rightSection.appendChild(infoTable);
 const updateInfoTable = async () => {
   const summaryForAllStatuses = await api.getSummaryForAllStatuses();
-  const newInfoTable = InfoTable(summaryForAllStatuses);
-  rootNode.replaceChild(newInfoTable, infoTable);
+  const newInfoTable = BlockContainer(InfoTable(summaryForAllStatuses));
+  rightSection.replaceChild(newInfoTable, infoTable);
   infoTable = newInfoTable;
 };
 [subscribeToPeriod, subscribeToRegion, subscribeToUnit].forEach((subscribe) => {
@@ -28,11 +43,11 @@ const updateInfoTable = async () => {
   await updateInfoTable();
 })();
 
-let countryList = CountryList();
+let countryList = BlockContainer(CountryList());
 rootNode.appendChild(countryList);
 const updateCountryList = async () => {
   const summaryForAllCountries = await api.getSummaryForAllCountries();
-  const newCountryList = CountryList(summaryForAllCountries);
+  const newCountryList = BlockContainer(CountryList(summaryForAllCountries));
   rootNode.replaceChild(newCountryList, countryList);
   countryList = newCountryList;
 };
@@ -43,11 +58,11 @@ const updateCountryList = async () => {
   await updateCountryList();
 })();
 
-let worldMap = WorldMap();
+let worldMap = BlockContainer(WorldMap());
 rootNode.appendChild(worldMap);
 const updateWorldMap = async () => {
   const mapData = await api.getMapData();
-  const newWorldMap = WorldMap(mapData);
+  const newWorldMap = BlockContainer(WorldMap(mapData));
   rootNode.replaceChild(newWorldMap, worldMap);
   worldMap = newWorldMap;
 };
@@ -63,12 +78,13 @@ const updateWorldMap = async () => {
   await updateWorldMap();
 })();
 
-let chart = DailyChart();
-rootNode.appendChild(chart);
+let chart = BlockContainer(DailyChart());
+rightSection.appendChild(chart);
+rootNode.appendChild(rightSection);
 const updateDailyChart = async () => {
   const chartData = await api.getDailyChartData();
-  const newDailyChart = DailyChart(chartData);
-  rootNode.replaceChild(newDailyChart, chart);
+  const newDailyChart = BlockContainer(DailyChart(chartData));
+  rightSection.replaceChild(newDailyChart, chart);
   chart = newDailyChart;
 };
 [
