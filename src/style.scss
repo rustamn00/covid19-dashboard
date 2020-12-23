@@ -30,6 +30,22 @@
   }
 }
 
+@media (max-width: 1200px) {
+  #root {
+    .country-list-container {
+      width: 30%;
+    }
+
+    .world-map-container {
+      width: 40%;
+    }
+
+    .right-section {
+      width: 30%;
+    }
+  }
+}
+
 @media (max-width: 1000px) {
   #root {
     flex-wrap: wrap;
@@ -49,7 +65,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   #root {
     flex-wrap: wrap;
     flex-direction: column;
@@ -60,7 +76,6 @@
 
     .world-map-container {
       width: 100%;
-      order: 3;
     }
 
     .right-section {
