@@ -1,0 +1,37 @@
+.footer {
+  height: 10vh;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+
+    img {
+      width: 80px;
+      height: 30px;
+      transform: translateY(25%);
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .footer {
+    height: 100px;
+    padding: 10px;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto;
+    div {
+      margin: 3px 0;
+    }
+  }
+}
+
+.display-none {
+  display: none;
+  margin: 0;
+  padding: 0;
+}
