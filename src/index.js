@@ -98,3 +98,29 @@ const updateDailyChart = async () => {
 (async () => {
   await updateDailyChart();
 })();
+
+setTimeout(() => {
+  const xButtons = document.querySelectorAll('.x-button');
+  const blockContainerDivs = document.querySelectorAll('.block-container');
+  xButtons.forEach((item) => {
+    item.addEventListener('click', () => {
+      const className = item.classList[0];
+      blockContainerDivs.forEach((div) => {
+        if (className.split('-')[0] !== div.classList[1].split('-')[0]) {
+          if (
+            className.split('-')[0] === 'world' ||
+            className.split('-')[0] === 'country'
+          ) {
+            rightSection.classList.toggle('display-none');
+          }
+          div.classList.toggle('display-none');
+        } else {
+          div.classList.toggle('size-100');
+          if (div.parentElement.classList.contains('right-section')) {
+            rightSection.classList.toggle('size-100');
+          }
+        }
+      });
+    });
+  });
+}, 3000);
