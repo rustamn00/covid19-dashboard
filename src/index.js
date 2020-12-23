@@ -19,7 +19,7 @@ rightSection.className = 'right-section';
 const BlockContainer = (childComponent) => {
   const blockContainer = document.createElement('div');
   const xButton = document.createElement('button');
-  xButton.innerText = 'X';
+  xButton.innerHTML = '&hArr;';
   xButton.className = `${childComponent.className}-button`;
   xButton.classList.add('x-button');
   blockContainer.className = 'block-container';
@@ -120,6 +120,10 @@ setTimeout(() => {
           if (div.parentElement.classList.contains('right-section')) {
             rightSection.classList.toggle('size-100');
           }
+          const buttonRef = item;
+          buttonRef.innerHTML = div.classList.contains('size-100')
+            ? '&nhArr;'
+            : '&hArr;';
         }
       });
     });

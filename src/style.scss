@@ -8,9 +8,16 @@
   width: fit-content;
   .x-button {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    font-size: 15px;
     border-radius: 50%;
+    outline: none;
+    border: none;
+    cursor: pointer;
   }
 }
 
@@ -28,7 +35,6 @@
 }
 
 .right-section {
-  padding: 10px;
   height: 90vh;
   background-color: lightgrey;
   width: 274px;

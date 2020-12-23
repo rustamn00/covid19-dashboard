@@ -1,6 +1,9 @@
 .info-table {
   width: 100%;
   margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+
   span {
     text-align: center;
     display: table-cell;
