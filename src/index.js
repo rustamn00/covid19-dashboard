@@ -28,6 +28,7 @@ const BlockContainer = (childComponent) => {
   blockContainer.appendChild(xButton);
   return blockContainer;
 };
+
 let infoTable = BlockContainer(InfoTable());
 rightSection.appendChild(infoTable);
 const updateInfoTable = async () => {

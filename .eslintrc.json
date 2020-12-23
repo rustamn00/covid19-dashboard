@@ -1,7 +1,6 @@
 {
   "parser": "babel-eslint",
   "extends": ["airbnb-base", "prettier"],
-  "plugins": ["jest"],
   "rules": {
     "linebreak-style": 0,
     "import/no-extraneous-dependencies": [
@@ -20,8 +19,7 @@
   },
   "env": {
     "browser": true,
-    "node": true,
-    "jest/globals": true
+    "node": true
   },
   "globals": {
     "SpeechRecognition": false

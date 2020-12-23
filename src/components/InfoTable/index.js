@@ -54,13 +54,3 @@ const InfoTable = (summaryForAllStatuses) => {
 };
 
 export default InfoTable;
-
-const dataObj = (summaryForAllStatuses) => {
-  const data = summaryForAllStatuses;
-  return data;
-}
-
-module.exports = {
-  getDataObj: (summaryForAllStatuses) => {return InfoTable},
-  getRealData: () => {return dataObj},
-};
