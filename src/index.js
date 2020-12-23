@@ -2,7 +2,13 @@ import State from 'utils/State';
 import api from 'utils/api';
 import './styles/main.scss';
 import './style.scss';
-import { CountryList, InfoTable, WorldMap, DailyChart } from './components';
+import {
+  CountryList,
+  InfoTable,
+  WorldMap,
+  DailyChart,
+  Footer,
+} from './components';
 
 State.init();
 const {
@@ -13,7 +19,9 @@ const {
 } = State;
 
 const rootNode = document.getElementById('root');
+const mainBlock = document.createElement('div');
 const rightSection = document.createElement('div');
+mainBlock.className = 'main-block';
 rightSection.className = 'right-section';
 
 const BlockContainer = (childComponent) => {
@@ -45,11 +53,11 @@ const updateInfoTable = async () => {
 })();
 
 let countryList = BlockContainer(CountryList());
-rootNode.appendChild(countryList);
+mainBlock.appendChild(countryList);
 const updateCountryList = async () => {
   const summaryForAllCountries = await api.getSummaryForAllCountries();
   const newCountryList = BlockContainer(CountryList(summaryForAllCountries));
-  rootNode.replaceChild(newCountryList, countryList);
+  mainBlock.replaceChild(newCountryList, countryList);
   countryList = newCountryList;
 };
 [subscribeToPeriod, subscribeToStatus, subscribeToUnit].forEach((subscribe) => {
@@ -60,11 +68,11 @@ const updateCountryList = async () => {
 })();
 
 let worldMap = BlockContainer(WorldMap());
-rootNode.appendChild(worldMap);
+mainBlock.appendChild(worldMap);
 const updateWorldMap = async () => {
   const mapData = await api.getMapData();
   const newWorldMap = BlockContainer(WorldMap(mapData));
-  rootNode.replaceChild(newWorldMap, worldMap);
+  mainBlock.replaceChild(newWorldMap, worldMap);
   worldMap = newWorldMap;
 };
 [
@@ -81,7 +89,8 @@ const updateWorldMap = async () => {
 
 let chart = BlockContainer(DailyChart());
 rightSection.appendChild(chart);
-rootNode.appendChild(rightSection);
+mainBlock.appendChild(rightSection);
+rootNode.appendChild(mainBlock);
 const updateDailyChart = async () => {
   const chartData = await api.getDailyChartData();
   const newDailyChart = BlockContainer(DailyChart(chartData));
@@ -100,6 +109,10 @@ const updateDailyChart = async () => {
   await updateDailyChart();
 })();
 
+const footer = Footer();
+// footer.classList.add('block-container');
+rootNode.appendChild(footer);
+
 setTimeout(() => {
   const xButtons = document.querySelectorAll('.x-button');
   const blockContainerDivs = document.querySelectorAll('.block-container');
@@ -114,6 +127,7 @@ setTimeout(() => {
           ) {
             rightSection.classList.toggle('display-none');
           }
+          footer.classList.toggle('display-none');
           div.classList.toggle('display-none');
         } else {
           div.classList.toggle('size-100');
