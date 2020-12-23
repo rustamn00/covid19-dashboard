@@ -1,6 +1,7 @@
 import helpers from 'utils/helpers';
 import { REGIONS, SELECT_TYPES } from 'utils/constants';
 import ControlPanel from '../common/ControlPanel';
+import countriesData from 'utils/countriesData.json';
 import './style.scss';
 
 const InfoTable = (summaryForAllStatuses) => {
@@ -38,7 +39,9 @@ const InfoTable = (summaryForAllStatuses) => {
   if (summaryForAllStatuses.region === REGIONS.ALL) {
     regionText.innerText = 'Global';
   } else {
-    regionText.innerText = summaryForAllStatuses.region;
+    regionText.innerText = countriesData.find(
+      (country) => country.iso2 === summaryForAllStatuses.region,
+    ).country;
   }
 
   dataPanel.appendChild(regionText);

@@ -1,7 +1,7 @@
 import { PERIODS, UNITS, REGIONS, STATUSES } from './constants';
 import countriesData from './countriesData.json';
 
-const countryNames = countriesData.map(({ country }) => country);
+const countryCodes = countriesData.map(({ iso2 }) => iso2);
 
 const State = {
   init() {
@@ -43,7 +43,7 @@ const State = {
   setRegion(region) {
     if (
       !Object.values(REGIONS).includes(region) &&
-      !countryNames.includes(region)
+      !countryCodes.includes(region)
     ) {
       throw new Error(`Invalid argument for region: '${region}'`);
     }
