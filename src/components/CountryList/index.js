@@ -3,6 +3,7 @@ import ControlPanel from '../common/ControlPanel';
 import State from '../../utils/State';
 import helpers from '../../utils/helpers';
 import './style.scss';
+import Keyboard from './components/Keyboard';
 
 const CountryList = (summaryObj) => {
   const countryList = document.createElement('div');
@@ -21,7 +22,7 @@ const CountryList = (summaryObj) => {
 
   const searchInput = document.createElement('input');
   searchInput.id = 'search__input';
-  searchInput.type = 'search';
+  searchInput.type = 'text';
   searchInput.className = 'search__input';
   searchInput.placeholder = 'Search...';
   searchBlockWrapper.appendChild(searchInput);
@@ -35,11 +36,12 @@ const CountryList = (summaryObj) => {
 
   countryList.appendChild(searchBlock);
   countryList.appendChild(casesBlock);
-  function casesForEachCountry(countries) {
+  const casesForEachCountry = (countries, searchValue = '') => {
     casesBlock.innerHTML = '';
     countries.forEach((country) => {
-      searchInput.value = searchInput.value.toLowerCase();
-      if (country.country.toLowerCase().includes(searchInput.value.trim())) {
+      if (
+        country.country.toLowerCase().includes(searchValue.toLowerCase().trim())
+      ) {
         const row = document.createElement('div');
         row.className = 'cases__for__country';
         row.innerHTML = `
@@ -55,12 +57,15 @@ const CountryList = (summaryObj) => {
         casesBlock.appendChild(row);
       }
     });
-  }
+  };
   casesForEachCountry(summaryObj.countries);
 
-  searchInput.onkeyup = () => {
-    casesForEachCountry(summaryObj.countries);
-  };
+  setTimeout(
+    () => Keyboard.init(casesForEachCountry.bind(null, summaryObj.countries)),
+    0,
+  );
+
   return countryList;
 };
+
 export default CountryList;

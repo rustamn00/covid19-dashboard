@@ -21,6 +21,9 @@
     "browser": true,
     "node": true
   },
+  "globals": {
+    "SpeechRecognition": false
+  },
   "settings": {
     "import/resolver": {
       "node": {},
