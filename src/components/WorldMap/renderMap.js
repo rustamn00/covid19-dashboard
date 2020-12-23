@@ -167,12 +167,12 @@ const renderMap = (containerName, mapData) => {
     )}</h4>`;
 
     for (let i = 0; i < grades.length; i += 1) {
-      const leftHandSide = helpers.addThousandsSeparator(grades[i]);
+      const leftHandSide = helpers.convertToShortNum(grades[i]);
 
       let rightHandSide = '';
       if (grades.length === colorPalette.length) {
         if (grades[i - 1] != null) {
-          rightHandSide += ` &ndash; <${helpers.addThousandsSeparator(
+          rightHandSide += ` &ndash; <${helpers.convertToShortNum(
             grades[i - 1],
           )}`;
         } else {
