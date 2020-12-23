@@ -1,7 +1,13 @@
 @import './variables';
 
+@font-face {
+  font-family: 'Lobster';
+  src: url('../assets/Lobster-Regular.ttf') format('truetype');
+}
+
 html {
   font-size: $font-size;
+  font-family: 'Lobster', cursive;
 }
 
 *,
