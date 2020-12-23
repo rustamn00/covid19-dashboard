@@ -75,12 +75,7 @@ const updateWorldMap = async () => {
   mainBlock.replaceChild(newWorldMap, worldMap);
   worldMap = newWorldMap;
 };
-[
-  subscribeToPeriod,
-  subscribeToRegion,
-  subscribeToStatus,
-  subscribeToUnit,
-].forEach((subscribe) => {
+[subscribeToPeriod, subscribeToStatus, subscribeToUnit].forEach((subscribe) => {
   subscribe.call(State, updateWorldMap);
 });
 (async () => {
@@ -110,7 +105,6 @@ const updateDailyChart = async () => {
 })();
 
 const footer = Footer();
-// footer.classList.add('block-container');
 rootNode.appendChild(footer);
 
 setTimeout(() => {
