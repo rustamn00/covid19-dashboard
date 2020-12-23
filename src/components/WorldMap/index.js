@@ -8,8 +8,8 @@ const WorldMap = (mapData) => {
   const worldMap = document.createElement('div');
   worldMap.className = 'world-map';
 
-  worldMap.innerText = 'World Map';
   if (!mapData) {
+    worldMap.innerText = 'Loading...';
     return worldMap;
   }
 

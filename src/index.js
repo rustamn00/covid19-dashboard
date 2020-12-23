@@ -27,7 +27,7 @@ rightSection.className = 'right-section';
 const BlockContainer = (childComponent) => {
   const blockContainer = document.createElement('div');
   const xButton = document.createElement('button');
-  xButton.innerText = 'X';
+  xButton.innerHTML = '&hArr;';
   xButton.className = `${childComponent.className}-button`;
   xButton.classList.add('x-button');
   blockContainer.className = 'block-container';
@@ -75,12 +75,7 @@ const updateWorldMap = async () => {
   mainBlock.replaceChild(newWorldMap, worldMap);
   worldMap = newWorldMap;
 };
-[
-  subscribeToPeriod,
-  subscribeToRegion,
-  subscribeToStatus,
-  subscribeToUnit,
-].forEach((subscribe) => {
+[subscribeToPeriod, subscribeToStatus, subscribeToUnit].forEach((subscribe) => {
   subscribe.call(State, updateWorldMap);
 });
 (async () => {
@@ -110,7 +105,6 @@ const updateDailyChart = async () => {
 })();
 
 const footer = Footer();
-// footer.classList.add('block-container');
 rootNode.appendChild(footer);
 
 setTimeout(() => {
@@ -134,6 +128,10 @@ setTimeout(() => {
           if (div.parentElement.classList.contains('right-section')) {
             rightSection.classList.toggle('size-100');
           }
+          const buttonRef = item;
+          buttonRef.innerHTML = div.classList.contains('size-100')
+            ? '&nhArr;'
+            : '&hArr;';
         }
       });
     });

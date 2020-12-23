@@ -32,7 +32,7 @@ const renderChart = (chartContainerName, chartData) => {
           {
             ticks: {
               beginAtZero: true,
-              callback: (value) => helpers.addThousandsSeparator(value),
+              callback: (value) => helpers.convertToShortNum(value),
             },
           },
         ],

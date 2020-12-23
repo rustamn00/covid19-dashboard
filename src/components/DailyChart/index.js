@@ -1,4 +1,5 @@
-import { SELECT_TYPES } from 'utils/constants';
+import { REGIONS, SELECT_TYPES } from 'utils/constants';
+import countriesData from 'utils/countriesData.json';
 import ControlPanel from '../common/ControlPanel';
 import renderChart from './renderChart';
 import './style.scss';
@@ -20,6 +21,16 @@ const DailyChart = (dailyChartData) => {
     unavailableDataText.innerText = 'Data is unavailable';
     dailyChart.appendChild(unavailableDataText);
   } else {
+    const regionText = document.createElement('h2');
+    if (dailyChartData.region === REGIONS.ALL) {
+      regionText.innerText = 'Global';
+    } else {
+      regionText.innerText = countriesData.find(
+        (country) => country.iso2 === dailyChartData.region,
+      ).country;
+    }
+    dailyChart.appendChild(regionText);
+
     const chartContainerName = 'chart-container';
     const chartContainer = document.createElement('canvas');
     chartContainer.id = chartContainerName;

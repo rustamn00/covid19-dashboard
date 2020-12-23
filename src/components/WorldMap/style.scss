@@ -1,11 +1,19 @@
 .world-map {
   width: 100%;
   height: 90vh;
+
   .map-container {
     margin: auto;
-    max-width: 480px;
-    height: 500px;
-    border: 2px solid yellow;
+    width: 450px;
+    height: 450px;
+    border-radius: 5px;
+  }
+
+  @media (min-width: 1200px) {
+    .map-container {
+      width: 512px;
+      height: 512px;
+    }
   }
 
   .map-info,

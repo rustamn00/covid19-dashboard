@@ -52,7 +52,7 @@ const CountryList = (summaryObj) => {
           )}</div>
         `;
         row.addEventListener('click', () => {
-          State.setRegion(country.country);
+          State.setRegion(country.iso2);
         });
         casesBlock.appendChild(row);
       }
