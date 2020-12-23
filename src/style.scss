@@ -22,23 +22,49 @@
 
 .right-section {
   width: 25%;
+  .info-table-container {
+    width: 100%;
+  }
+  .daily-chart-container {
+    width: 100%;
+  }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1000px) {
   #root {
     flex-wrap: wrap;
 
     .country-list-container {
-      width: 250px;
+      width: 50%;
     }
 
     .world-map-container {
-      width: 500px;
+      width: 100%;
       order: 3;
     }
 
     .right-section {
-      width: 250px;
+      width: 50%;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  #root {
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    .country-list-container {
+      width: 100%;
+    }
+
+    .world-map-container {
+      width: 100%;
+      order: 3;
+    }
+
+    .right-section {
+      width: 100%;
     }
   }
 }
