@@ -1,3 +1,11 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #root {
   display: flex;
 }
@@ -9,19 +17,28 @@
     position: absolute;
     top: 0;
     right: 0;
+    border-radius: 50%;
   }
 }
 
 .country-list-container {
   width: 25%;
+  background-color: lightgrey;
+  height: 90vh;
 }
 
 .world-map-container {
-  width: 50%;
+  background-color: lightgrey;
+  padding: 10px;
+  width: 45%;
+  height: 90vh;
 }
 
 .right-section {
-  width: 25%;
+  padding: 10px;
+  height: 90vh;
+  background-color: lightgrey;
+  width: 30%;
   .info-table-container {
     width: 100%;
   }
@@ -30,56 +47,16 @@
   }
 }
 
-@media (max-width: 1200px) {
-  #root {
-    .country-list-container {
-      width: 30%;
-    }
-
-    .world-map-container {
-      width: 40%;
-    }
-
-    .right-section {
-      width: 30%;
-    }
-  }
-}
-
 @media (max-width: 1000px) {
-  #root {
-    flex-wrap: wrap;
-
-    .country-list-container {
-      width: 50%;
-    }
-
-    .world-map-container {
-      width: 100%;
-      order: 3;
-    }
-
-    .right-section {
-      width: 50%;
-    }
-  }
-}
-
-@media (max-width: 650px) {
   #root {
     flex-wrap: wrap;
     flex-direction: column;
 
-    .country-list-container {
-      width: 100%;
-    }
-
-    .world-map-container {
-      width: 100%;
-    }
-
+    .country-list-container,
+    .world-map-container,
     .right-section {
-      width: 100%;
+      width: 500px;
+      margin: 0 auto;
     }
   }
 }
