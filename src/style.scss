@@ -1,4 +1,4 @@
-#root {
+.main-block {
   display: flex;
   justify-content: center;
 }
@@ -47,7 +47,7 @@
 }
 
 @media (max-width: 1000px) {
-  #root {
+  .main-block {
     flex-wrap: wrap;
     flex-direction: column;
 
