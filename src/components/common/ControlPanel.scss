@@ -1,12 +1,16 @@
 .control-panel {
   margin: 5px;
+  display: flex;
+  flex-wrap: wrap;
 
   select {
     margin-right: 5px;
+    margin-bottom: 5px;
     background-color: #c834db;
     color: white;
-    padding: 4px;
     font-size: 12px;
+    border-radius: 5px;
+    outline: none;
     border-style: groove;
     cursor: pointer;
     font-family: monospace;

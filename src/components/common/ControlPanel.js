@@ -29,7 +29,7 @@ const [Status, Unit, Period] = [
   [
     UNITS,
     () => State.getUnit(),
-    (unit) => (unit === UNITS.ABSOLUTE ? 'Total' : 'Per 100k pop'),
+    (unit) => (unit === UNITS.ABSOLUTE ? 'Absolute' : 'Per 100k pop'),
     (unit) => State.setUnit(unit),
   ],
   [
